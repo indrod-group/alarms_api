@@ -1,3 +1,5 @@
+from datetime import timedelta
+from django.utils import timezone
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from .models import Detail, User
@@ -6,6 +8,16 @@ from .serializers import DetailSerializer, UserSerializer
 class DetailViewSet(viewsets.ModelViewSet):
     queryset = Detail.objects.all()
     serializer_class = DetailSerializer
+
+    def list(self, request, *args, **kwargs):
+        last_alarms = request.query_params.get('last_alarms', 'false') == 'true'
+        if last_alarms:
+            seconds = int(request.query_params.get('seconds', '120'))  # Default to 120 seconds (2 minutes)
+            time_ago = timezone.now() - timedelta(seconds=seconds)
+            time_ago_unix = int(time_ago.timestamp())
+            self.queryset = self.queryset.filter(alarm_time__gte=time_ago_unix)
+
+        return super().list(request, *args, **kwargs)
 
     def create(self, request, *args, **kwargs):
         imei = request.data.get('imei')
