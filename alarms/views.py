@@ -10,6 +10,14 @@ class DetailViewSet(viewsets.ModelViewSet):
     queryset = Detail.objects.all()
     serializer_class = DetailSerializer
 
+    def filter_queryset_by_alarm_code(self, request):
+        alarm_codes = request.query_params.get('alarm_codes')
+        if alarm_codes is not None:
+            # Se convierte el parámetro en una lista separando por comas
+            alarm_codes = alarm_codes.split(',')
+            # Se filtra el queryset por los valores de la lista
+            self.queryset = self.queryset.filter(alarm_code__in=alarm_codes)
+
     def filter_queryset_by_alarm_time(self, request):
         last_alarms = request.query_params.get('last_alarms', 'false') == 'true'
         if last_alarms:
@@ -32,6 +40,8 @@ class DetailViewSet(viewsets.ModelViewSet):
         # Si se aplica el filtro de last_alarms, no se aplica el filtro de time_range
         if not self.filter_queryset_by_alarm_time(request):
             self.filter_queryset_by_time_range(request)
+        # Se aplica el filtro de alarm_code si se especifica
+        self.filter_queryset_by_alarm_code(request)
         return super().list(request, *args, **kwargs)
 
     def get_existing_detail(self, imei, alarm_time, alarm_code):
