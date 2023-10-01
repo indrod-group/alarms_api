@@ -25,6 +25,24 @@ class AlarmCode(models.TextChoices):
     SHARPTURN = "SHARPTURN", "Giro brusco"
     TURNOVER = "TURNOVER", "Volcar"
     FASTDECELERATION = "FASTDECELERATION", "Desaceleración rápida"
+    REMOVECONTINUOUSLY = "REMOVECONTINUOUSLY", "Alarma de desmontaje continuo, alarma de sensor de luz y fallo de alimentación"
+    SHIFT = "SHIFT", "Alarma de movimiento"
+    AREAOUT = "AREAOUT", "Alarma de salida de área"
+    AREAIN = "AREAIN", "Alarma de entrada a área"
+    EXTERNALLOWBATTERY = "EXTERNALLOWBATTERY", "Alarma de baja tensión de la batería externa"
+    XINHAOPINBI = "XINHAOPINBI", "Alarma de bloqueo de señal"
+    PSEUDOBASESTATION = "PSEUDOBASESTATION", "Alarma de estación base falsa"
+    ONLINE = "ONLINE", "Alarma en línea"
+    ABNORMALACCUMULATION = "ABNORMALACCUMULATION", "Alarma de acumulación anormal"
+    RISKPLACE = "RISKPLACE", "Alarma de permanencia en lugar de riesgo"
+    VINMISMATCH = "VINMISMATCH", "Alarma de coincidencia incorrecta de VIN"
+    SHORTMILES = "SHORTMILES", "Alarma de kilometraje ultracorto"
+    LONGMILES = "LONGMILES", "Alarma de kilometraje super largo"
+    TRAIL = "TRAIL", "Alarma de remolque"
+    MULTIPLAYER = "MULTIPLAYER", "Alarma de jugador múltiple"
+    OPENCOVER = "OPENCOVER", "Alarma de tapa abierta"
+    POWERON = "POWERON", "Alarma de encendido"
+    POWEROFF = "POWEROFF", "Alarma de apagado"
 
 class DeviceBase(models.Model):
     code = models.IntegerField()
@@ -32,11 +50,7 @@ class DeviceBase(models.Model):
     lat = models.CharField(max_length=20, blank=True, null=True)
     lng = models.CharField(max_length=20, blank=True, null=True)
     time = models.IntegerField()
-    position_type = models.CharField(
-        max_length=20,
-        blank=True,
-        null=True,
-    )
+    position_type = models.CharField(max_length=20, blank=True, null=True)
     speed = models.IntegerField(blank=True, null=True)
     course = models.IntegerField(blank=True, null=True)
 
