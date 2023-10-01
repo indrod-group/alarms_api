@@ -88,7 +88,10 @@ WSGI_APPLICATION = 'acv_alarms.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 DATABASES = {
     'default': dj_database_url.config(
-        default='sqlite:///db.sqlite3'
+        default='postgres://xeland314:cavp4618Xdb@localhost:5432/acv_alarms_database'
+    ),
+    'backup': dj_database_url.parse(
+        'sqlite:///db.sqlite3'
     )
 }
 
