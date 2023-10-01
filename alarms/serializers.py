@@ -10,4 +10,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = '__all__'
+        fields = (
+            'imei', 'user_name', 'car_owner',
+            'license_number', 'vin', 'is_tracking'
+        )
