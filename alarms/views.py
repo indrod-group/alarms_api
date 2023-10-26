@@ -27,6 +27,11 @@ class DetailViewSet(viewsets.ModelViewSet):
             self.queryset = self.queryset.filter(alarm_time__gte=time_ago_unix)
             return True  # Indica que se aplicó este filtro
 
+    def filter_queryset_by_imei(self, request):
+        imei = request.query_params.get('imei', None)
+        if imei is not None:
+            self.queryset = self.queryset.filter(imei=imei)
+
     def filter_queryset_by_time_range(self, request):
         start_time = request.query_params.get('start_time')
         end_time = request.query_params.get('end_time', int(timezone.now().timestamp()))
@@ -42,6 +47,7 @@ class DetailViewSet(viewsets.ModelViewSet):
             self.filter_queryset_by_time_range(request)
         # Se aplica el filtro de alarm_code si se especifica
         self.filter_queryset_by_alarm_code(request)
+        self.filter_queryset_by_imei(request)
         return super().list(request, *args, **kwargs)
 
     def get_existing_detail(self, imei, alarm_time, alarm_code):
