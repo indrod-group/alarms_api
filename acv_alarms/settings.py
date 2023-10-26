@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get(
     'SECRET_KEY',
-    default='*snyad=ylz6!$b)w+o$g6c-zh+gjuogr7x_=!xybxwt+&m0312'
+    default='*snyad=e3r43¡$b)w+o$g6c-zh+gjuogr7x_=!xybxwt+&m0312'
 )
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -142,7 +142,8 @@ if not DEBUG:    # Tell Django to copy statics to the `staticfiles` directory
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_WHITELIST = [
-    'http://localhost:8080'
+    'http://localhost:5173',
+    'https://twlxb59c-5173.use2.devtunnels.ms'
 ]
 
 REST_FRAMEWORK = {
